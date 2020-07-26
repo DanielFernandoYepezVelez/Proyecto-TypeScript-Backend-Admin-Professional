@@ -1,1 +1,10 @@
-console.log('hola mundo #1');
+import { app } from './app';
+
+class Main {
+  constructor() {
+    app.middlewares();
+    app.server();
+  }
+}
+
+new Main();
