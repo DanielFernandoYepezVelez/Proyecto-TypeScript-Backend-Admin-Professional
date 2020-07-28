@@ -47,5 +47,11 @@ IF NOT EXISTS users
 (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
+/* Agregando Un Campo A La Tabla De Users */
+ALTER TABLE users ADD activate BOOLEAN NOT NULL DEFAULT true;
+
 /* Modificando Un Campo De La Tabla Users */
 ALTER TABLE users MODIFY google BOOLEAN NULL DEFAULT FALSE;
+ALTER TABLE users MODIFY doctor_id INT NOT NULL DEFAULT 0;
+/* No Es Válido */
+ALTER TABLE users MODIFY doctor_id INT NULL;

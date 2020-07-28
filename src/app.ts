@@ -1,10 +1,12 @@
+import 'dotenv/config';
+
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import 'dotenv/config';
 
 /* Routes */
 import { userRoutes } from './routes/user.routes';
+import { authRoutes } from './routes/auth.routes';
 
 class App {
   /* Initializations */
@@ -19,6 +21,7 @@ class App {
 
   routes() {
     this.app.use('/api', userRoutes);
+    this.app.use('/api', authRoutes);
   }
 
   async server(): Promise<void> {

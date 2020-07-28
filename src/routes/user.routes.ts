@@ -14,6 +14,12 @@ class UserRoutes {
       [userValidation.createUserValidation],
       userController.createUser
     );
+    this.router.put(
+      '/updateUser/:user_id',
+      [userValidation.updateUserValidation],
+      userController.updateUser
+    );
+    this.router.delete('/deleteUser/:user_id', userController.deleteUser);
   }
 }
 
