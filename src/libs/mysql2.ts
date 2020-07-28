@@ -1,8 +1,8 @@
-import { createPool, Pool } from 'mysql2/promise';
+import { createPool } from 'mysql2/promise';
 
 class Mysql2 {
   connectDatabase(): any {
-    const pool: Pool = createPool({
+    const pool = createPool({
       host: process.env.HOST_DATABSE,
       user: process.env.USER_DATABASE,
       password: process.env.PASSWORD_DATABASE,

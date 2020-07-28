@@ -1,12 +1,16 @@
 import 'dotenv/config';
 
 import express, { Application } from 'express';
+import passport from 'passport';
 import morgan from 'morgan';
 import cors from 'cors';
 
 /* Routes */
 import { userRoutes } from './routes/user.routes';
 import { authRoutes } from './routes/auth.routes';
+
+/* Librerias */
+import { passportJwt } from './libs/passport-jwt';
 
 class App {
   /* Initializations */
@@ -17,6 +21,7 @@ class App {
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
+    passport.use(passportJwt.nuevaStrategia());
   }
 
   routes() {
