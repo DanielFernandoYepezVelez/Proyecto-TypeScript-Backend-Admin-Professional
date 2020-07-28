@@ -8,6 +8,8 @@ import cors from 'cors';
 /* Routes */
 import { userRoutes } from './routes/user.routes';
 import { authRoutes } from './routes/auth.routes';
+import { hospitalRoutes } from './routes/hospital.routes';
+import { doctorRoutes } from './routes/doctor.routes';
 
 /* Librerias */
 import { passportJwt } from './libs/passport-jwt';
@@ -25,8 +27,10 @@ class App {
   }
 
   routes() {
-    this.app.use('/api', userRoutes);
     this.app.use('/api', authRoutes);
+    this.app.use('/api', userRoutes);
+    this.app.use('/api', hospitalRoutes);
+    this.app.use('/api', doctorRoutes);
   }
 
   async server(): Promise<void> {

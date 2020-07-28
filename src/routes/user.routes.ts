@@ -16,6 +16,7 @@ class UserRoutes {
     );
     this.router.post(
       '/newUser',
+      passport.authenticate('jwt', { session: false }),
       [userValidation.createUserValidation],
       userController.createUser
     );
