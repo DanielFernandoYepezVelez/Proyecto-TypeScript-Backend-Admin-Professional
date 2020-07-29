@@ -1,8 +1,8 @@
 import { Router } from 'express';
-// import passport from 'passport';
+import passport from 'passport';
 
 /* Middlewares */
-// import { userValidation } from '../utils/middlewares/UserValidation';
+import { doctorValidation } from './../utils/middlewares/DoctorValidation';
 
 /* Controllers */
 import { doctorController } from '../controllers/doctor.controller';
@@ -11,12 +11,13 @@ class DoctorRoutes {
   constructor(public router: Router) {
     this.router.get(
       '/doctors',
-      // passport.authenticate('jwt', { session: false }),
+      passport.authenticate('jwt', { session: false }),
       doctorController.getDoctors
     );
     this.router.post(
       '/newDoctor',
-      // [userValidation.createUserValidation],
+      passport.authenticate('jwt', { session: false }),
+      [doctorValidation.createDoctorValidation],
       doctorController.createDoctor
     );
     this.router.put(

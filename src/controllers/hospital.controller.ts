@@ -5,14 +5,17 @@ import { pool } from '../libs/mysql2';
 
 /* Modelos */
 import { IHospital } from '../utils/models/IHospital';
-import { use } from 'passport';
 
 class HospitalController {
   async getHopitals(req: Request, res: Response): Promise<Response<JSON>> {
     try {
+      const query = await pool.query(
+        'SELECT hospitals.id, hospitals.name, hospitals.user_id, users.id AS id_U, users.name AS name_U, users.img AS img_U FROM hospitals INNER JOIN users ON hospitals.user_id = users.id'
+      );
+
       return res.json({
         ok: true,
-        hospitals: '',
+        hospitals: query[0],
       });
     } catch (e) {
       return res.status(400).json({
@@ -23,8 +26,10 @@ class HospitalController {
   }
 
   async createHospital(req: Request, res: Response): Promise<Response<JSON>> {
-    const newHospital: IHospital = req.body;
-    newHospital.user_id = req.user;
+    const newHospital: IHospital = {
+      user_id: req.user,
+      ...req.body,
+    };
 
     try {
       await pool.query('INSERT INTO hospitals SET ?', [newHospital]);

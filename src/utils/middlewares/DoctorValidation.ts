@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { hospitalSchema } from '../schemasJoi/Hospital';
+import { doctorSchema } from '../schemasJoi/Doctor';
 
-class HospitalValidation {
-  async createHospitalValidation(
+class DoctorValidation {
+  async createDoctorValidation(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<any> {
-    const { error } = await hospitalSchema
-      .createHospitalSchema()
+    const { error } = await doctorSchema
+      .createDoctorSchema()
       .validate(req.body);
 
     if (!(error === undefined)) {
@@ -23,4 +23,4 @@ class HospitalValidation {
   }
 }
 
-export const hospitalValidation = new HospitalValidation();
+export const doctorValidation = new DoctorValidation();

@@ -11,7 +11,7 @@ class HospitalRoutes {
   constructor(public router: Router) {
     this.router.get(
       '/hospitals',
-      // passport.authenticate('jwt', { session: false }),
+      passport.authenticate('jwt', { session: false }),
       hospitalController.getHopitals
     );
     this.router.post(

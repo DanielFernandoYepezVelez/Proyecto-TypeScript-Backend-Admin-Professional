@@ -29,7 +29,7 @@ class AuthController {
       const validatePassword = bcrypt.comparePassword(password, passwordDB);
       userFind.messageUserPassword(validatePassword);
 
-      /* Consultas Independientes(NodeJS Es Non-Blocking) */
+      /* Consultas Lanzadas Al Mismo Tiempo(NodeJS Es Non-Blocking) */
       const queryID = pool.query('SELECT id FROM users WHERE email = ?', [
         email,
       ]);

@@ -13,15 +13,26 @@ import { getDataDB } from '../utils/helpers/getDataDB';
 import { IUser } from '../utils/models/IUser';
 
 class UserController {
+  /* PAGINACIÓN SQL(IMPORTANTE) */
   async getUsers(req: Request, res: Response): Promise<Response<JSON>> {
+    let desde = Number(req.query.desde || 0);
+
     try {
-      const query = await pool.query(
-        'SELECT id, name, email, google, role, activate FROM users'
+      /* Consultas Lanzadas Al Mismo Tiempo(NodeJS Es Non-Blocking) */
+      const queryPag = pool.query(
+        'SELECT id, name, email, google, role, activate FROM users LIMIT 5 OFFSET ?',
+        [desde]
       );
+      const queryTotal = pool.query(
+        'SELECT COUNT(DISTINCT id) AS Total FROM users'
+      );
+
+      const [users, totalUsers] = await Promise.all([queryPag, queryTotal]);
 
       return res.json({
         ok: true,
-        users: query[0],
+        users: users[0],
+        totalUsers: totalUsers[0],
       });
     } catch (e) {
       return res.status(400).json({
