@@ -4,6 +4,7 @@ import express, { Application } from 'express';
 import passport from 'passport';
 import morgan from 'morgan';
 import cors from 'cors';
+import expressFileUpload from 'express-fileupload';
 
 /* Librerias */
 import { passportJwt } from './libs/passport-jwt';
@@ -24,6 +25,7 @@ class App {
     this.app.use(cors());
     this.app.use(morgan('dev'));
     this.app.use(express.json());
+    this.app.use(expressFileUpload());
     passport.use(passportJwt.nuevaStrategia());
     this.app.use(express.urlencoded({ extended: false }));
   }

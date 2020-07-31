@@ -14,6 +14,7 @@ class UploadRoutes {
       passport.authenticate('jwt', { session: false }),
       uploadController.fileUpload
     );
+    this.router.get('/upload/:tipo/:image', uploadController.returnImage);
   }
 }
 

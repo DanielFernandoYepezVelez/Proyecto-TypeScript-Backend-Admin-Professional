@@ -10,7 +10,7 @@ class HospitalController {
   async getHopitals(req: Request, res: Response): Promise<Response<JSON>> {
     try {
       const query = await pool.query(
-        'SELECT hospitals.id, hospitals.name, hospitals.user_id, users.id AS id_U, users.name AS name_U, users.img AS img_U FROM hospitals INNER JOIN users ON hospitals.user_id = users.id'
+        'SELECT hospitals.id, hospitals.name, hospitals.img, hospitals.user_id, users.id AS id_U, users.name AS name_U, users.img AS img_U FROM hospitals INNER JOIN users ON hospitals.user_id = users.id'
       );
 
       return res.json({

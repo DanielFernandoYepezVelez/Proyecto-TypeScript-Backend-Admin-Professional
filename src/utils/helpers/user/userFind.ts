@@ -2,9 +2,9 @@ import { Pool } from 'mysql2/promise';
 
 class UserFind {
   findUser(query: Pool) {
-    /* Validando Que El Usuario Exista En La DB */
+    /* Validando Que El ID Exista En La DB */
     if (JSON.stringify(query) === '[]') {
-      throw new Error('User Not Exist!').message;
+      throw new Error('ID Not Exist!').message;
     }
   }
 

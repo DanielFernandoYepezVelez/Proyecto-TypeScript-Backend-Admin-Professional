@@ -20,7 +20,7 @@ class UserController {
     try {
       /* Consultas Lanzadas Al Mismo Tiempo(NodeJS Es Non-Blocking) */
       const queryPag = pool.query(
-        'SELECT id, name, email, google, role, activate FROM users LIMIT 5 OFFSET ?',
+        'SELECT id, name, img, email, google, role, activate FROM users LIMIT 5 OFFSET ?',
         [desde]
       );
       const queryTotal = pool.query(
