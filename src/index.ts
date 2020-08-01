@@ -4,6 +4,7 @@ class Main {
   constructor() {
     app.middlewares();
     app.routes();
+    app.staticFile();
     app.server();
   }
 }

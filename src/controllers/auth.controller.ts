@@ -8,6 +8,11 @@ import { jsonWebToken } from '../libs/jwt';
 /* Helpers */
 import { userFind } from '../utils/helpers/user/userFind';
 import { getDataDB } from '../utils/helpers/getDataDB';
+import { googleVerify } from '../utils/helpers/googleVerify';
+
+/* Interfaces */
+import { IGoogle } from '../utils/models/IGoogle';
+import { IUser } from '../utils/models/IUser';
 
 class AuthController {
   async login(req: Request, res: Response): Promise<Response<JSON>> {
@@ -51,6 +56,64 @@ class AuthController {
         ok: false,
         msg: 'Login Not Successfully',
         error: e,
+      });
+    }
+  }
+
+  /* LOGIN GOOGLE AL FINAL CON MI PROPIO TOKEN */
+  async loginGoogle(req: Request, res: Response): Promise<Response<JSON>> {
+    const token: IGoogle = {
+      ...req.body,
+    };
+
+    try {
+      /* Lo Que Me Retorna Google Lo Destructuro */
+      const { name, email, picture }: any = await googleVerify.verifyToken(
+        token.google_token
+      );
+
+      /* Si Existe Este Email En La Base De Datos Obtengo ID */
+      let query = await pool.query('SELECT id FROM users WHERE email = ?', [
+        email,
+      ]);
+
+      if (JSON.stringify(query[0]) === '[]') {
+        /* Crear Un Nuevo Usuario Si No Existe*/
+        /* Simepre Solo Puede Iniciar Sesion Con Google */
+        const newUser: IUser = {
+          name,
+          email,
+          password: 'N/A',
+          google: true,
+          img: picture,
+        };
+
+        await pool.query('INSERT INTO users SET ?', [newUser]);
+      } else {
+        /* Si Existe Usuario, Entonces Se Registró Con Anterioridad Con Email Y Password(N/A Le Quita El Método De Autenticación Con Email Y Password, Pero Le Brinda Método De Autenticación Con Google)*/
+        const existUserId = getDataDB.init(query[0], 2, 7);
+
+        await pool.query(
+          'UPDATE users SET password = ?, google = ?, img = ? WHERE id = ?',
+          ['N/A', true, picture, existUserId]
+        );
+      }
+
+      query = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
+
+      /* Generar MI JsonWebToken(Para El Login) */
+      const tokenMio = jsonWebToken.createToken(query[0]);
+
+      return res.json({
+        ok: true,
+        tokenMio,
+        mgs: 'Google Successfully',
+      });
+    } catch (e) {
+      return res.status(400).json({
+        ok: false,
+        e,
+        mgs: 'Google NOT Successfully',
       });
     }
   }

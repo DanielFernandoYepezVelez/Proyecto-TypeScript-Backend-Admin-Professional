@@ -13,6 +13,11 @@ class AuthRoutes {
       [userValidation.loginUserValidation],
       authController.login
     );
+    this.router.post(
+      '/loginGoogle',
+      [userValidation.loginUserGoogleValidation],
+      authController.loginGoogle
+    );
   }
 }
 

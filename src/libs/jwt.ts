@@ -7,11 +7,11 @@ class Jwt {
   createToken(...data: any[]) {
     /* Obtener id - role - UserDB */
     const idUser = getDataDB.init(data[0], 2, 7);
-    const roleUser = getDataDB.init(data[1], 3, 10);
+    // const roleUser = getDataDB.init(data[1], 3, 10);
 
     const payload = {
       idUser,
-      roleUser,
+      // roleUser,
     };
 
     return jwt.sign(

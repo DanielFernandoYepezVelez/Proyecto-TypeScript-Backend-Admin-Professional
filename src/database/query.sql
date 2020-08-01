@@ -24,6 +24,12 @@ IF NOT EXISTS users
 ALTER TABLE users ADD activate BOOLEAN NOT NULL DEFAULT true;
 /* Modificando Un Campo De La Tabla Users */
 ALTER TABLE users MODIFY google BOOLEAN NULL DEFAULT FALSE;
+/* Modificando Un Campo De La Tabla Users */
+ALTER TABLE users MODIFY name VARCHAR
+(50) NOT NULL;
+/* Modificando Un Campo De La Tabla Users */
+ALTER TABLE users MODIFY email VARCHAR
+(100) NOT NULL UNIQUE;
 
 CREATE TABLE
 IF NOT EXISTS hospitals

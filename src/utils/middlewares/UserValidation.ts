@@ -37,6 +37,25 @@ class UserValidation {
     return next();
   }
 
+  async loginUserGoogleValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
+    const { error } = await userSchema
+      .loginUserGoogleSchema()
+      .validate(req.body);
+
+    if (!(error === undefined)) {
+      return res.status(400).json({
+        ok: false,
+        error: error?.details[0].message,
+      });
+    }
+
+    return next();
+  }
+
   async updateUserValidation(
     req: Request,
     res: Response,
