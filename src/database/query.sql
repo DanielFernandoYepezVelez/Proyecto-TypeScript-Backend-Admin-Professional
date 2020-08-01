@@ -44,6 +44,9 @@ IF NOT EXISTS hospitals
 (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
+/* Agregando Un Campo A La Tabla De Hospitals */
+ALTER TABLE hospitals ADD activate BOOLEAN NOT NULL DEFAULT true;
+
 CREATE TABLE
 IF NOT EXISTS doctors
 (
@@ -61,3 +64,6 @@ IF NOT EXISTS doctors
 (hospital_id) REFERENCES hospitals
 (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+/* Agregando Un Campo A La Tabla De Doctors */
+ALTER TABLE doctors ADD activate BOOLEAN NOT NULL DEFAULT true;

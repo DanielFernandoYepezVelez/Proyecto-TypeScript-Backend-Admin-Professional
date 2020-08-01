@@ -117,6 +117,27 @@ class AuthController {
       });
     }
   }
+
+  async renovarToken(req: Request, res: Response): Promise<Response<JSON>> {
+    const id = req.user;
+
+    try {
+      const query = await pool.query('SELECT id FROM users WHERE id = ?', [id]);
+      const token = jsonWebToken.createToken(query[0]);
+
+      return res.json({
+        ok: true,
+        msg: 'token Renew',
+        tokenRenew: token,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        ok: false,
+        error: e,
+        msg: 'token NOT Renew',
+      });
+    }
+  }
 }
 
 export const authController = new AuthController();

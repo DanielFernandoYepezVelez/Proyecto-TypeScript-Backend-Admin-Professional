@@ -22,13 +22,13 @@ class DoctorRoutes {
     );
     this.router.put(
       '/updateDoctor/:doctor_id',
-      // passport.authenticate('jwt', { session: false }),
-      // [userValidation.updateUserValidation],
+      passport.authenticate('jwt', { session: false }),
+      // [doctorValidation.updateDoctorValidation],
       doctorController.updateDoctor
     );
     this.router.delete(
       '/deleteDoctor/:doctor_id',
-      // passport.authenticate('jwt', { session: false }),
+      passport.authenticate('jwt', { session: false }),
       doctorController.deleteDoctor
     );
   }

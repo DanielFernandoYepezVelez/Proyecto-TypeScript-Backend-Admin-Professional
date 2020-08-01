@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import passport from 'passport';
 
 /* Middlewares */
 import { userValidation } from '../utils/middlewares/UserValidation';
@@ -14,9 +15,14 @@ class AuthRoutes {
       authController.login
     );
     this.router.post(
-      '/loginGoogle',
+      '/login/loginGoogle',
       [userValidation.loginUserGoogleValidation],
       authController.loginGoogle
+    );
+    this.router.get(
+      '/login/renewToken',
+      passport.authenticate('jwt', { session: false }),
+      authController.renovarToken
     );
   }
 }

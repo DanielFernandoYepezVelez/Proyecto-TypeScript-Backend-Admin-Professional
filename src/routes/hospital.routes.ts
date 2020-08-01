@@ -22,13 +22,13 @@ class HospitalRoutes {
     );
     this.router.put(
       '/updateHospital/:hospital_id',
-      // passport.authenticate('jwt', { session: false }),
-      // [userValidation.updateUserValidation],
+      passport.authenticate('jwt', { session: false }),
+      [hospitalValidation.updateHospitalValidation],
       hospitalController.updateHospital
     );
     this.router.delete(
       '/deleteHospital/:hospital_id',
-      // passport.authenticate('jwt', { session: false }),
+      passport.authenticate('jwt', { session: false }),
       hospitalController.deleteHospital
     );
   }
