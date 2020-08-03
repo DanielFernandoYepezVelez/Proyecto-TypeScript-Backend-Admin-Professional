@@ -44,12 +44,12 @@ class AuthController {
       const [idUser, roleUser] = await Promise.all([queryID, queryROLE]);
 
       /* Generar Un Token-User */
-      const tokenUser = jsonWebToken.createToken(idUser[0], roleUser[0]);
+      const token = jsonWebToken.createToken(idUser[0], roleUser[0]);
 
       return res.json({
         ok: true,
         msg: 'Login Successfully',
-        tokenUser,
+        token,
       });
     } catch (e) {
       return res.status(400).json({
@@ -62,14 +62,14 @@ class AuthController {
 
   /* LOGIN GOOGLE AL FINAL CON MI PROPIO TOKEN */
   async loginGoogle(req: Request, res: Response): Promise<Response<JSON>> {
-    const token: IGoogle = {
+    const tokenG: IGoogle = {
       ...req.body,
     };
 
     try {
       /* Lo Que Me Retorna Google Lo Destructuro */
       const { name, email, picture }: any = await googleVerify.verifyToken(
-        token.google_token
+        tokenG.google_token
       );
 
       /* Si Existe Este Email En La Base De Datos Obtengo ID */
@@ -102,11 +102,11 @@ class AuthController {
       query = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
 
       /* Generar MI JsonWebToken(Para El Login) */
-      const tokenMio = jsonWebToken.createToken(query[0]);
+      const token = jsonWebToken.createToken(query[0]);
 
       return res.json({
         ok: true,
-        tokenMio,
+        token,
         mgs: 'Google Successfully',
       });
     } catch (e) {
@@ -128,7 +128,7 @@ class AuthController {
       return res.json({
         ok: true,
         msg: 'token Renew',
-        tokenRenew: token,
+        token,
       });
     } catch (e) {
       return res.status(400).json({
