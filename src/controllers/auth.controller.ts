@@ -123,12 +123,19 @@ class AuthController {
 
     try {
       const query = await pool.query('SELECT id FROM users WHERE id = ?', [id]);
+
       const token = jsonWebToken.createToken(query[0]);
+
+      const user = await pool.query(
+        'SELECT id, name, img, email, google, role, activate, created_at FROM users WHERE id = ?',
+        [id]
+      );
 
       return res.json({
         ok: true,
         msg: 'token Renew',
         token,
+        user: user[0],
       });
     } catch (e) {
       return res.status(400).json({

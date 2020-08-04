@@ -35,9 +35,13 @@ class UploadController {
         query_h,
       ]);
 
-      userFind.findUser(user[0]);
-      userFind.findUser(doctor[0]);
-      userFind.findUser(hospital[0]);
+      if (tipo === 'users') {
+        userFind.findUser(user[0]);
+      } else if (tipo === 'doctors') {
+        userFind.findUser(doctor[0]);
+      } else if (tipo === 'hospitals') {
+        userFind.findUser(hospital[0]);
+      }
 
       /* Procesar la imagen */
       const file: any = req.files.imagen;
