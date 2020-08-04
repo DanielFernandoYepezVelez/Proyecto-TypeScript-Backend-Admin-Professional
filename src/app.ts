@@ -1,13 +1,10 @@
-// import 'dotenv/config';
-
-import dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 
 import express, { Application } from 'express';
 import passport from 'passport';
 import morgan from 'morgan';
 import cors from 'cors';
-import path from 'path';
+/* import path from 'path'; */
 import expressFileUpload from 'express-fileupload';
 
 /* Librerias */
@@ -43,9 +40,9 @@ class App {
     this.app.use('/api', hospitalRoutes);
   }
 
-  staticFile() {
+  /* staticFile() {
     this.app.use(express.static(path.join(__dirname, './public/')));
-  }
+  } */
 
   async server(): Promise<void> {
     try {
