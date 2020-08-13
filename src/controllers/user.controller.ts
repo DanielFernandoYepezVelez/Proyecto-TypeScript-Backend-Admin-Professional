@@ -20,8 +20,8 @@ class UserController {
   try {
    /* Consultas Lanzadas Al Mismo Tiempo(NodeJS Es Non-Blocking) */
    const queryPag = pool.query(
-    'SELECT id, name, img, email, google, role, activate FROM users LIMIT 5 OFFSET ?',
-    [desde]
+    'SELECT id, name, img, email, google, role, activate FROM users WHERE activate != ? LIMIT 5 OFFSET ?',
+    [0, desde]
    );
    const queryTotal = pool.query(
     'SELECT COUNT(DISTINCT id) AS Total FROM users'
@@ -110,9 +110,9 @@ class UserController {
    }
 
    query = await pool.query('UPDATE users SET ? WHERE id = ?', [
-        updateUser,
-        user_id,
-      ]);
+    updateUser,
+    user_id,
+   ]);
 
    return res.json({
     ok: true,
@@ -140,7 +140,7 @@ class UserController {
     user_id,
    ]);
 
-   return res.status(400).json({
+   return res.json({
     ok: true,
     msg: 'User Deleted Successfully',
    });

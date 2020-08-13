@@ -51,7 +51,7 @@ class SearchController {
     try {
       switch (table) {
         case 'users':
-          query = await pool.query('SELECT name FROM users WHERE name LIKE ?', [
+          query = await pool.query('SELECT id, name, img, email, google, role, activate FROM users WHERE name LIKE ?', [
             busqueda,
           ]);
           break;
